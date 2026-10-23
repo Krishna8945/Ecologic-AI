@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoLogix AI — Autonomous Cold-Chain Food Rescue & Spoilage Prevention</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-badge">
+        <span class="logo-icon">🌱</span>
+        <div class="logo-titles">
+          <h1>EcoLogix AI</h1>
+          <span class="tagline">Autonomous Cold-Chain Food Rescue & HACCP Safety Sentinel</span>
+        </div>
+      </div>
+      <div class="system-status-pill" id="engine-status-pill">
+        <span class="pulse-dot"></span>
+        <span id="engine-status-text">Connecting to Gemini Engine...</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <a href="/download" class="btn btn-outline" download style="text-decoration: none;">📥 Download Project (.ZIP)</a>
+      <button class="btn btn-outline" id="btn-config-modal">⚙️ Gemini API Settings</button>
+      <button class="btn btn-secondary" id="btn-reset-data">🔄 Reset Scenarios</button>
+      <button class="btn btn-primary" id="btn-run-all-triage">⚡ Autonomous Fleet Triage</button>
+    </div>
+  </header>
+
+  <!-- Executive ESG & Real-Time Impact Ribbon -->
+  <section class="impact-ribbon">
+    <div class="metric-card">
+      <div class="metric-icon">🥗</div>
+      <div class="metric-info">
+        <span class="metric-value" id="val-meals">0</span>
+        <span class="metric-label">Meals Provided</span>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">🌍</div>
+      <div class="metric-info">
+        <span class="metric-value" id="val-co2e">0 kg</span>
+        <span class="metric-label">GHG Abated (CO₂e)</span>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">📦</div>
+      <div class="metric-info">
+        <span class="metric-value" id="val-kg">0 kg</span>
+        <span class="metric-label">Food Salvaged</span>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">💵</div>
+      <div class="metric-info">
+        <span class="metric-value" id="val-usd">$0</span>
+        <span class="metric-label">Asset Value Saved</span>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">💧</div>
+      <div class="metric-info">
+        <span class="metric-value" id="val-water">0 m³</span>
+        <span class="metric-label">Water Footprint Saved</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="app-main">
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-inventory">📦 Cold-Chain Inventory & Fleet</button>
+      <button class="tab-btn" data-tab="tab-orchestrator">🤖 Multi-Agent Reasoning Pipeline</button>
+      <button class="tab-btn" data-tab="tab-dispatch">🚚 Active Allocations & HITL Gateway</button>
+      <button class="tab-btn" data-tab="tab-audit">🔒 Tamper-Evident HACCP Ledger</button>
+      <button class="tab-btn" data-tab="tab-bigquery">📊 Google BigQuery & ESG Data Warehouse</button>
+    </nav>
+
+    <!-- TAB 1: Inventory Batches & IoT Telemetry Simulator -->
+    <div class="tab-content active" id="tab-inventory">
+      <div class="content-split">
+        <!-- Batches Grid -->
+        <div class="inventory-section">
+          <div class="section-header">
+            <h2>Active Perishable Inventory Batches</h2>
+            <span class="section-sub">Continuous monitoring via Arrhenius & Q-10 Kinetic Degradation Models</span>
+          </div>
+          <div class="batches-grid" id="batches-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Telemetry & Sensor Simulator Sidebar -->
+        <aside class="simulator-sidebar">
+          <div class="sidebar-card">
+            <h3>🔬 IoT Cold-Chain Anomaly Simulator</h3>
+            <p class="text-muted">Inject real-world cold-chain excursions (compressor failure, ambient dock delay, re-cooling) to test autonomous agent reflexes.</p>
+            
+            <div class="form-group">
+              <label>Select Target Batch:</label>
+              <select id="sim-batch-select" class="form-select"></select>
+            </div>
+
+            <div class="simulator-actions">
+              <button class="btn btn-warning btn-block" id="btn-sim-mild-spike">
+                ⚠️ Mild Temperature Drift (+3.5°C)
+              </button>
+              <button class="btn btn-danger btn-block" id="btn-sim-severe-failure">
+                🚨 Refrigeration Failure (+12.0°C, 3 hrs)
+              </button>
+              <button class="btn btn-success btn-block" id="btn-sim-restore-cooling">
+                ❄️ Restore Optimal Re-Cooling (-6.0°C)
+              </button>
+            </div>
+
+            <div class="batch-details-mini" id="selected-batch-telemetry-view">
+              <h4>Telemetry Trace</h4>
+              <div id="telemetry-chart-placeholder" class="telemetry-trace-log">
+                Select a batch above to inspect live IoT sensor packets.
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- TAB 2: Multi-Agent Reasoning Pipeline -->
+    <div class="tab-content" id="tab-orchestrator">
+      <div class="pipeline-container">
+        <div class="pipeline-header">
+          <div>
+            <h2>Multi-Agent Autonomous Execution Trace</h2>
+            <p class="text-muted">Inspect deterministic and cognitive outputs across all 5 specialized agents.</p>
+          </div>
+          <div class="pipeline-trigger-bar">
+            <select id="pipeline-batch-select" class="form-select"></select>
+            <button class="btn btn-primary" id="btn-trigger-pipeline">⚡ Execute Agentic Pipeline</button>
+          </div>
+        </div>
+
+        <!-- Interactive 5-Stage Agent Visualizer -->
+        <div class="agent-stages-flow">
+          <!-- Stage 1 -->
+          <div class="stage-card" id="card-stage-1">
+            <div class="stage-badge">Agent 1</div>
+            <div class="stage-icon">📡</div>
+            <h4>Sensing & Kinetics</h4>
+            <span class="stage-status" id="status-stage-1">Idle</span>
+            <p class="stage-desc">Q-10 Arrhenius decay & Danger Zone tracking</p>
+            <div class="stage-output" id="output-stage-1">Awaiting trigger</div>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="stage-card" id="card-stage-2">
+            <div class="stage-badge">Agent 2</div>
+            <div class="stage-icon">🧠</div>
+            <h4>Gemini Cognitive Triage</h4>
+            <span class="stage-status" id="status-stage-2">Idle</span>
+            <p class="stage-desc">Multi-factor risk & structured salvage verdict</p>
+            <div class="stage-output" id="output-stage-2">Awaiting trigger</div>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="stage-card" id="card-stage-3">
+            <div class="stage-badge">Agent 3</div>
+            <div class="stage-icon">📍</div>
+            <h4>Logistics Allocation</h4>
+            <span class="stage-status" id="status-stage-3">Idle</span>
+            <p class="stage-desc">Geospatial Haversine & capacity matching</p>
+            <div class="stage-output" id="output-stage-3">Awaiting trigger</div>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="stage-card" id="card-stage-4">
+            <div class="stage-badge">Agent 4</div>
+            <div class="stage-icon">🛡️</div>
+            <h4>HACCP Safety Gate</h4>
+            <span class="stage-status" id="status-stage-4">Idle</span>
+            <p class="stage-desc">Deterministic FDA Food Code validation</p>
+            <div class="stage-output" id="output-stage-4">Awaiting trigger</div>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="stage-card" id="card-stage-5">
+            <div class="stage-badge">Agent 5</div>
+            <div class="stage-icon">🔐</div>
+            <h4>Dispatch & Ledger</h4>
+            <span class="stage-status" id="status-stage-5">Idle</span>
+            <p class="stage-desc">SHA-256 HMAC token & audit commit</p>
+            <div class="stage-output" id="output-stage-5">Awaiting trigger</div>
+          </div>
+        </div>
+
+        <!-- Full Execution Trace JSON View -->
+        <div class="trace-raw-container">
+          <div class="trace-header">
+            <h3>Pipeline Execution Diagnostics</h3>
+            <span class="latency-tag" id="pipeline-total-latency">Latency: -- ms</span>
+          </div>
+          <pre class="code-block" id="pipeline-full-json">// Run the pipeline above to stream live multi-agent execution telemetry...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Active Allocations & HITL Gateway -->
+    <div class="tab-content" id="tab-dispatch">
+      <div class="dispatch-container">
+        <div class="section-header">
+          <h2>Active Salvage Allocations & Human-in-the-Loop Gateway</h2>
+          <span class="section-sub">Zero-trust human verification for high-risk temperature excursions or high-value biologics</span>
+        </div>
+
+        <div class="plans-list" id="plans-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Tamper-Evident HACCP Ledger -->
+    <div class="tab-content" id="tab-audit">
+      <div class="audit-container">
+        <div class="section-header flex-between">
+          <div>
+            <h2>Cryptographic Tamper-Evident HACCP Audit Ledger</h2>
+            <span class="section-sub">FSMA 204 Traceability Rule compliant SHA-256 Merkle blockchain</span>
+          </div>
+          <button class="btn btn-outline" id="btn-verify-blockchain">🔍 Verify Blockchain Integrity</button>
+        </div>
+
+        <div class="blockchain-status-card" id="blockchain-verification-banner">
+          <span class="status-icon">🛡️</span>
+          <div>
+            <strong id="chain-status-text">Ledger Chain Status: Ready for verification</strong>
+            <div class="text-muted" id="chain-hash-tip">Tip Hash: --</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Block ID</th>
+                <th>Timestamp (UTC)</th>
+                <th>Actor & Role</th>
+                <th>Action Type</th>
+                <th>Batch</th>
+                <th>Previous Hash (SHA-256)</th>
+                <th>Block Hash (SHA-256)</th>
+              </tr>
+            </thead>
+            <tbody id="audit-table-body">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Google BigQuery & ESG Data Warehouse -->
+    <div class="tab-content" id="tab-bigquery">
+      <div class="bigquery-container">
+        <div class="section-header flex-between">
+          <div>
+            <h2>Google Cloud BigQuery & ESG Carbon Analytics</h2>
+            <span class="section-sub">Enterprise streaming buffer and automated Scope 1 & Scope 3 greenhouse gas reporting</span>
+          </div>
+          <button class="btn btn-primary" id="btn-refresh-bq">🔄 Refresh BigQuery Buffer</button>
+        </div>
+
+        <div class="bq-grid">
+          <div class="bq-card">
+            <h3>Google BigQuery Streaming Buffer</h3>
+            <p class="text-muted">Partitioned by ingestion DATE, clustered by category and recipient_type.</p>
+            <pre class="code-block" id="bq-streaming-json">// Loading BigQuery streaming buffer...</pre>
+          </div>
+
+          <div class="bq-card">
+            <h3>BigQuery Architecture DDL & ESG SQL</h3>
+            <p class="text-muted">Production-grade enterprise schema for Cloud Run & BigQuery integration.</p>
+            <pre class="code-block" id="bq-ddl-view">// Loading DDL...</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal: Gemini API Configuration -->
+  <div class="modal-overlay" id="config-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Google Gemini Configuration</h3>
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>EcoLogix AI operates directly with <strong>Google Gemini 1.5/2.5 Flash</strong> via high-performance structured reasoning.</p>
+        
+        <div class="status-box" id="modal-status-box">
+          Current Mode: <strong id="modal-current-mode">EcoLogix Cognitive Engine (Zero-Config Offline Fallback)</strong>
+        </div>
+
+        <div class="form-group">
+          <label for="input-gemini-key">Enter Google Gemini API Key:</label>
+          <input type="password" id="input-gemini-key" class="form-control" placeholder="AIzaSy...">
+          <small class="text-muted">Your key is kept securely in runtime memory. If left blank, the high-fidelity offline cognitive simulation will run seamlessly.</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-dismiss-modal">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-key">Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
